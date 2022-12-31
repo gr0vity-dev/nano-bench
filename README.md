@@ -12,9 +12,13 @@ Network is out of scope of this benchmark.
 
 
 Run the test : 
-``` ./bench.sh ```
+``` 
+git clone https://github.com/gr0vity-dev/nano-bench.git
+cd nano-bench
+./bench.sh 
+```
 
-On its first run this will :
+On its first run `./bench.sh` will :
 - update and init the git the submodules (nano-local)
 - unzip the blocks and ledgers required to run the benchmark
 - install a python virtuel environment
@@ -35,8 +39,17 @@ The network is used as follows :
 On Ryzen9 with Kingston Renegade DIsk it peaks at 13k cps
 
 ```
+Ryzen9 + Kingston Renegade Disk
          test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90      cps_p100
 0  BENCHMARK 1node  22-12-31 12:13:40  Nano V24.0 19935b8b            200000       13318.10   9088.448332
-1  BENCHMARK 1node  22-12-31 12:20:25  Nano V24.0 98227de6            200000       13160.10   8692.851005
-2  BENCHMARK 1node  22-12-31 13:24:26  Nano V24.0 98227de6            200000       13263.10   9088.164067
+
+
+Ryzen9 + SSD (samsung evo 970)
+         test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90      cps_p100
+0  BENCHMARK 1node  22-12-31 15:42:33  Nano V24.0 98227de6            200000        7156.10  4760.441235
+
+
+gr0vity nano PR :
+         test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90      cps_p100
+0  BENCHMARK 1node  22-12-31 15:49:51  Nano V24.0 98227de6            200000       13149.10  5880.375557
 ```
