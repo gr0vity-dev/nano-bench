@@ -1,0 +1,3 @@
+[submodule "submodules/nanolocal"]
+	path = submodules/nanolocal
+	url = https://github.com/gr0vity-dev/nano-local.git

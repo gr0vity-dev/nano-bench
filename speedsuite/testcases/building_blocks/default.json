@@ -1,0 +1,150 @@
+{
+    "setup_ledger_and_config" : {
+    "shell_vars" : ["LEDGER", "SETUP_NODES", "NL_CONFIG", "NODES_CONFIG", "REMOTE_IP"],
+    "function" : "run_commands",
+    "action" : [
+        "./nl_run.py down",
+        "cp ./speedsuite/testcases/nanolocal/saved_configs/$NL_CONFIG ./nanolocal/nl_config.toml",
+        "./nl_run.py conf_edit --nested_path remote_address --value $REMOTE_IP",
+        "./nl_run.py conf_edit --nested_path representatives.docker_tag --value $DOCKER_TAG",
+        "./nl_run.py conf_edit --nested_path representatives.config_node_path --value $NODES_CONFIG",
+        "./nl_run.py conf_edit --nested_path representatives.nodes.*.config_node_path --value $NODES_CONFIG",        
+        "./nl_run.py create",
+        "./nl_run.py reset",
+        "for i in $SETUP_NODES; do cp ./speedsuite/testcases/nanolocal/saved_ledgers/$LEDGER ./nanolocal/nano_nodes/${i}/NanoTest/data.ldb; done"
+     ]
+    },
+
+    "nl_set_nodes_version_individual" : {
+        "shell_vars" : ["NODE_INDEXES", "NODES_VERSION"],
+        "function" : "run_commands",
+        "action" : [               
+               "for i in $NODE_INDEXES; do ./nl_run.py conf_edit --nested_path representatives.nodes.${i}.docker_tag --value $NODES_VERSION; done"                   
+            ]
+        },
+  
+
+    "nl_set_prs_config" : {
+        "shell_vars" : ["NODES_CONFIG"],
+        "function" : "run_commands",
+        "action" : [
+               "./nl_run.py conf_edit --nested_path representatives.nodes.*.config_node_path --value $NODES_CONFIG"                   
+            ]
+        },
+
+    "nl_stop_reset" : {
+        "shell_vars" : [],
+        "function" : "run_commands",
+        "action" : [
+               "./nl_run.py stop",
+               "./nl_run.py reset"                  
+            ]
+        },
+    "nl_stop_nodes" : {
+        "shell_vars" : ["NODES_NAME"],
+        "function" : "run_commands",
+        "action" : [
+                "for node_name in $NODES_NAME; do ./nl_run.py stop_nodes --node $node_name; done"                         
+            ]
+        },
+
+    "nl_destroy" : {
+        "shell_vars" : [],
+        "function" : "run_commands",
+        "action" : [
+                "./nl_run.py destroy"             
+            ]
+        },
+
+    "nl_set_nodes_config_shared" : {
+        "shell_vars" : ["NODES_CONFIG"],
+        "function" : "run_commands",
+        "action" : [               
+               "./nl_run.py conf_edit --nested_path representatives.config_node_path --value $NODES_CONFIG"                   
+            ]
+        },
+
+    "nl_set_nodes_config_individual" : {
+        "shell_vars" : ["NODE_INDEXES", "NODES_CONFIG"],
+        "function" : "run_commands",
+        "action" : [               
+               "for i in $NODE_INDEXES; do ./nl_run.py conf_edit --nested_path representatives.nodes.{i}.config_node_path --value $NODES_CONFIG; done"                   
+            ]
+        },
+
+    "export_to_redash" : {
+        "function" : "run_commands",
+        "shell_vars" : ["REDASH_PATH"],
+        "action" : [
+            "./ntcp_run.py export_tosql",
+            "cp tcpdump/out/data.db $REDASH_PATH",
+            "echo EXPORT=TRUE $TEST_NAME $DOCKER_TAG $(grep -r -E -o \"runid.{0,17}\" tcpdump/config/tcp_analyzer_config.json) >> ./run_ids.out"
+        ]
+    },
+
+    "tc_enable" : {
+        "function" : "run_commands",
+        "action" : [           
+            "./nl_run.py conf_edit --nested_path tc_enable --value True" ,
+            "./nl_run.py create"          
+        ]
+    },
+
+    "nl_create_start" : {
+        "function" : "run_commands",
+        "shell_vars" : ["WAIT_S"],     
+        "action" : [
+            "./nl_run.py create",    
+            "./nl_run.py start", 
+            "./nl_run.py init_wallets",
+            "sleep $WAIT_S"          
+        ]
+    },
+
+    "nl_start" : {
+        "function" : "run_commands",
+        "action" : [
+            "./nl_run.py start", 
+            "./nl_run.py init_wallets"            
+        ]
+    },
+
+    "prom_enable_bnano" : {
+        "function" : "run_commands",       
+        "action" : [
+            "./nl_run.py conf_edit --nested_path promexporter_enable --value False",
+            "./nl_run.py conf_edit --nested_path prom_gateway --value https://nl-exporter.bnano.info"    
+        ]        
+    },
+    
+
+    "tc_set_all_prs" : {
+        "function" : "run_commands",
+        "shell_vars" : ["TC_SETTINGS"],
+        "depends_on" : ["nl_create_start", "tc_enable"],
+        "action" : [
+            "./nl_run.py tc --value \"$TC_SETTINGS\" ",
+            "./nl_run.py tc_del --node nano-bench_genesis"            
+        ]
+    },
+
+    "tcpdump_start" : {
+        "function" : "run_commands",
+        "action" : [
+            "./ntcp_run.py stop",
+            "sleep 30",
+            "./ntcp_run.py start"           
+        ]
+    },
+
+    "tcpdump_stop" : {
+        "function" : "run_commands",
+        "depends_on" : ["tcpdump_start"],
+        "action" : [
+            "./ntcp_run.py stop",
+            "echo EXPORT=FALSE $TEST_NAME $DOCKER_TAG $(grep -r -E -o \"runid.{0,17}\" tcpdump/config/tcp_analyzer_config.json) >> ./run_ids.out"
+        ]
+    }
+
+
+}

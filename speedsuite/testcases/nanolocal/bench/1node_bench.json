@@ -1,0 +1,53 @@
+{
+    "testname" : "BENCHMARK 1node",
+    "description" : "Simple testcase to benchmark a 1 node network",
+    "runs_per_version" : 1,    
+    "iterations_wait_s" : 1,  
+    "docker_versions" : ["gr0v1ty/nano-bench:V24.0RC2"],
+    "env" : "nanolocal", 
+    "testsuite" : {
+        "_bb.setup_ledger_and_config" : {
+            "SETUP_NODES" : "nano-bench_genesis nano-bench_pr1",           
+            "LEDGER" : "1pr_bench_200k.ldb",
+            "NL_CONFIG" : "1node_net_nanolocal_config.toml",
+            "NODES_CONFIG" : "./nanolocal/services/default_config-node-voting_disabled.toml",
+            "REMOTE_IP" : "127.0.0.1"
+        },      
+        "_bb.nl_create_start" : {
+            "WAIT_S" : "0"
+        },
+        "_bb.nl_stop_nodes" : {
+            "NODES_NAME" : "nano-bench_genesis"
+        },
+        "load_blocks" : {            
+            "function" : "load_blocks",
+            "params" : {
+                "subset" : {"start_index": 0 , "end_index" : 200000},
+                "blocks_path" : "1node_bintree.json"
+            }
+        },
+        "perpare_enable_voting" : {  
+            "skip" : false,
+            "function" : "run_commands",
+            "action" : [                
+                "./nl_run.py conf_edit --nested_path representatives.nodes.*.config_node_path --value ./nanolocal/services/default_config-node.toml",
+                "./nl_run.py create"               
+             ]
+        },
+        "setup_ledger_and_config" : {    
+            "skip" : false,
+            "function" : "log_progress",
+            "params" : {
+                "blocks_from_memory" : true,
+                "rpc_conf" : {"join_end" : true,  "timeout": 300, "nodes" : "nano-bench_pr1"}
+            }
+        },
+        "activate_enable_voting" : {  
+            "skip" : false,
+            "function" : "run_commands",
+            "action" : [
+                "./nl_run.py restart --node nano-bench_pr1"
+             ]
+        }        
+    }    
+}

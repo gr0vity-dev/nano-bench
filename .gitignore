@@ -1,0 +1,11 @@
+**/__pycache__
+**/.DS_Store
+**/._.DS_Store
+**/*.ldb
+**/z.*
+venv_nanolocal/
+speedsuite/sql/nano_testcases.db
+speedsuite/testcases/*/saved_blocks/*.json
+
+
+
