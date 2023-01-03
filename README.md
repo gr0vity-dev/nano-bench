@@ -3,7 +3,7 @@
 *nano-bench* is a nanocurrency benchmark tool to evaluate how well your hardware is suited for running a nano_node.
 It automates:
 - the generation of a nano-local network
-- loading a ledger with 200k unconfimred blocks
+- loading a ledger with 200k unconfirmed blocks
 - measuring max cps while cementing the blocks
 
 Network testing (e.g. bandwidth & latency impact) is out of scope of this benchmark.
