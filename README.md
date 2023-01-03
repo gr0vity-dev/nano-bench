@@ -64,17 +64,17 @@ The network is used as follows:
 On Ryzen9 with Kingston Renegade Disk it peaks at 13k cps
 
 ```
-Ryzen9 + Kingston Renegade Disk
+Ryzen9 + Kingston Renegade Disk:
          test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90      cps_p100
 0  BENCHMARK 1node  22-12-31 12:13:40  Nano V24.0 19935b8b            200000       13318.10   9088.448332
 
 
-Ryzen9 + SSD (samsung evo 970)
+Ryzen9 + SSD (samsung evo 970):
          test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90      cps_p100
 0  BENCHMARK 1node  22-12-31 15:42:33  Nano V24.0 98227de6            200000        7156.10  4760.441235
 
 
-gr0vity nano PR
+gr0vity nano PR:
          test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90      cps_p100
 0  BENCHMARK 1node  22-12-31 15:49:51  Nano V24.0 98227de6            200000       13149.10  5880.375557
 
