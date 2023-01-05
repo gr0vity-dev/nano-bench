@@ -317,6 +317,7 @@ class BlockCountConfirmationStats(StatsLogger):
         # super().node_name = node_name
         # super().version = node_version
 
+        self.log_error_on_block_count = True
         self.stats_is_logged = False
         self.nano_rpc = nano_rpc
 
@@ -354,8 +355,13 @@ class BlockCountConfirmationStats(StatsLogger):
             block_count = self.nano_rpc.block_count()
             cemented_count = int(block_count["cemented"])
             self.update(cemented_count)
-        except Exception as e:
-            print("Logger unavailable", str(e))
+            self.log_error_on_block_count = True
+        except Exception as error_msg:
+            if self.log_error_on_block_count:
+                print("Node is restarting...")
+                self.log_error_on_block_count = False
+            else:
+                print("Exception raised for [log_block_count]", str(error_msg))
 
     def set_confirmation_counter(self, confirmed_count) -> None:
         self.conf_count_all = confirmed_count
