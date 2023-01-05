@@ -10,6 +10,10 @@ Network testing (e.g. bandwidth & latency impact) is out of scope of this benchm
 
 # running nano-bench
 
+Prerequisits :
+
+`docker , docker-compose, gcc , python3, python3-dev`
+
 Run the test: 
 ```
 git clone https://github.com/gr0vity-dev/nano-bench.git
