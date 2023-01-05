@@ -68,12 +68,15 @@ The network is used as follows:
 On Ryzen9 with Kingston Renegade Disk it peaks at 13k cps
 
 ```
-Ryzen9 + Kingston Renegade Disk:
+Ryzen9 5950X + nvme Kingston Renegade:
          test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90      cps_p100
 0  BENCHMARK 1node  22-12-31 12:13:40  Nano V24.0 19935b8b            200000       13318.10   9088.448332
 
+Ryzen9 5900X + nvme Seagate FireCuda 520
+         test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90     cps_p100
+0  BENCHMARK 1node  23-01-05 15:56:32  Nano V24.0 98227de6            200000       13258.10  8693.250624
 
-Ryzen9 + Samsung SSD 840:
+Ryzen9 5950X + SSD Samsung SSD 840:
          test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90      cps_p100
 0  BENCHMARK 1node  22-12-31 15:42:33  Nano V24.0 98227de6            200000        7156.10  4760.441235
 
@@ -88,4 +91,5 @@ i5-11400 + Samsung 970 Evo Plus (NVME M2):
 1  BENCHMARK 1node  23-01-02 20:38:37  Nano V24.0 98227de6            200000       13159.10  6894.992575
 2  BENCHMARK 1node  23-01-02 20:39:52  Nano V24.0 98227de6            200000       13323.10  6450.162374
 3  BENCHMARK 1node  23-01-02 20:40:53  Nano V24.0 98227de6            200000       13236.10  6663.152588
+
 ```
