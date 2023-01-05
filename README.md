@@ -69,7 +69,7 @@ Ryzen9 + Kingston Renegade Disk:
 0  BENCHMARK 1node  22-12-31 12:13:40  Nano V24.0 19935b8b            200000       13318.10   9088.448332
 
 
-Ryzen9 + SSD (samsung evo 970):
+Ryzen9 + Samsung SSD 840:
          test_name         start_date         node_version  confirmed_blocks cps_p50_to_p90      cps_p100
 0  BENCHMARK 1node  22-12-31 15:42:33  Nano V24.0 98227de6            200000        7156.10  4760.441235
 
