@@ -32,3 +32,5 @@ fi
 
 #Print results from all testruns
 ./venv_nanolocal/bin/python3 -c "from speedsuite.sql.query_testcase import NanoSqlQuery; print(NanoSqlQuery().query_cps_p25_to_p90())"
+
+./nl_run.py down
