@@ -3,7 +3,7 @@
     "description" : "Simple testcase to benchmark a 1 node network",
     "runs_per_version" : 1,    
     "iterations_wait_s" : 1,  
-    "docker_versions" : ["gr0v1ty/nano-bench:V24.0RC2"],
+    "docker_versions" : ["nanocurrency/nano:V26.1"],
     "env" : "nanolocal", 
     "testsuite" : {
         "_bb.setup_ledger_and_config" : {
